@@ -3,14 +3,20 @@ AWSTemplateFormatVersion: '2010-09-09'
 Parameters:
   KeyName:
     Type: AWS::EC2::KeyPair::KeyName
+    # Remove this default value when generalizing
     Default: 'Bitwarden'
     Description: Name of an existing EC2 KeyPair to enable SSH access to the ECS instances.
   VpcId:
     Type: AWS::EC2::VPC::Id
+    # Remove this default value when generalizing
     Default: 'vpc-1049fd6d'
     Description: Select a VPC that allows instances access to the Internet.
   SubnetId:
     Type: List<AWS::EC2::Subnet::Id>
+    # Remove this default values when generalizing
+    Default:
+      - 'subnet-f226be94'
+      - 'subnet-145b3d35'
     Description: Select at two subnets in your selected VPC.
   DesiredCapacity:
     Type: Number
