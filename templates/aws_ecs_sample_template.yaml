@@ -1,13 +1,10 @@
-# Bitwarden on AWS
 AWSTemplateFormatVersion: '2010-09-09'
 Parameters:
   KeyName:
     Type: AWS::EC2::KeyPair::KeyName
-    Default: 'Bitwarden'
     Description: Name of an existing EC2 KeyPair to enable SSH access to the ECS instances.
   VpcId:
     Type: AWS::EC2::VPC::Id
-    Default: 'vpc-1049fd6d'
     Description: Select a VPC that allows instances access to the Internet.
   SubnetId:
     Type: List<AWS::EC2::Subnet::Id>
@@ -27,13 +24,57 @@ Parameters:
     AllowedValues:
       - t2.micro
       - t2.small
+      - t2.medium
+      - t2.large
+      - m3.medium
+      - m3.large
+      - m3.xlarge
+      - m3.2xlarge
+      - m4.large
+      - m4.xlarge
+      - m4.2xlarge
+      - m4.4xlarge
+      - m4.10xlarge
+      - c4.large
+      - c4.xlarge
+      - c4.2xlarge
+      - c4.4xlarge
+      - c4.8xlarge
+      - c3.large
+      - c3.xlarge
+      - c3.2xlarge
+      - c3.4xlarge
+      - c3.8xlarge
+      - r3.large
+      - r3.xlarge
+      - r3.2xlarge
+      - r3.4xlarge
+      - r3.8xlarge
+      - i2.xlarge
+      - i2.2xlarge
+      - i2.4xlarge
+      - i2.8xlarge
     ConstraintDescription: Please choose a valid instance type.
 Mappings:
   AWSRegionToAMI:
     us-east-1:
       AMIID: ami-09bee01cc997a78a6
+    us-east-2:
+      AMIID: ami-0a9e12068cb98a01d
+    us-west-1:
+      AMIID: ami-0fa6c8d131a220017
+    us-west-2:
+      AMIID: ami-078c97cf1cefd1b38
+    eu-west-1:
+      AMIID: ami-0c9ef930279337028
+    eu-central-1:
+      AMIID: ami-065c1e34da68f2b02
     ap-northeast-1:
       AMIID: ami-02265963d1614d04d
+    ap-southeast-1:
+      AMIID: ami-0b68661b29b9e058c
+    ap-southeast-2:
+      AMIID: ami-00e4b147599c13588
 Resources:
   ECSCluster:
     Type: AWS::ECS::Cluster
@@ -115,7 +156,6 @@ Resources:
         - SourceContainer: simple-app
       Volumes:
       - Name: my-vol
-      NetworkMode: awsvpc
   ECSALB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
