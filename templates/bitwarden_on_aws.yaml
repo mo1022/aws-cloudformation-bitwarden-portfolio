@@ -78,11 +78,27 @@ Resources:
     Properties:
       Family: !Join ['', [!Ref 'AWS::StackName', -ecs-demo-app]]
       ContainerDefinitions:
+      - Name: bitwarden-server
+        Cpu: 10
+        Essential: true
+        Image: bitwarden/server
+        Memory: 300
+        LogConfiguration:
+          LogDriver: awslogs
+          Options:
+            awslogs-group: !Ref 'CloudwatchLogsGroup'
+            awslogs-region: !Ref 'AWS::Region'
+            awslogs-stream-prefix: ecs-bitwarden-server
+        MountPoints:
+        - ContainerPath: /usr/local/bitwarden
+          SourceVolume: bw-vol
+        PortMappings:
+        - ContainerPort: 8080
       - Name: simple-app
-        Cpu: '10'
-        Essential: 'true'
+        Cpu: 10
+        Essential: true
         Image: httpd:2.4
-        Memory: '300'
+        Memory: 300
         LogConfiguration:
           LogDriver: awslogs
           Options:
