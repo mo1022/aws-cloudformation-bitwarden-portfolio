@@ -117,7 +117,6 @@ Resources:
         - SourceContainer: simple-app
       Volumes:
       - Name: my-vol
-      NetworkMode: awsvpc
   ECSALB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
