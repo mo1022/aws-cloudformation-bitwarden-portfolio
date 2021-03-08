@@ -80,6 +80,11 @@ Resources:
       ContainerDefinitions:
       - Name: bitwarden-server
         Cpu: 10
+        Command: [
+          'curl -Lso bitwarden.sh https://go.btwrdn.co/bw-sh 
+            && chmod +x bitwarden.sh 
+            && ./bitwarden.sh start'
+        ]
         Essential: true
         Image: bitwarden/server
         Memory: 300
